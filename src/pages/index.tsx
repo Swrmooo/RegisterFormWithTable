@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useRouter } from 'next/router';
 
@@ -12,7 +11,6 @@ export default function Home() {
 
   return (
     <main className='bg-white'>
-      
       <div className='flex justify-center'>
       <div>
         <button type="button"
@@ -22,6 +20,7 @@ export default function Home() {
         </button>
       </div>
         <table className='w-3/4 m-4'>
+          <tbody>
           <tr>
             <th>firstname</th>
             <th>lastname</th>
@@ -40,6 +39,7 @@ export default function Home() {
             <td>firstname</td>
             <td>firstname</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </main>

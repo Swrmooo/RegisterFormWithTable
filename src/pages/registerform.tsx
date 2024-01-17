@@ -24,12 +24,9 @@ export default function Home() {
     return (
         <main className=''>
             <div className='border-2'>
-                <div>
-                    
-                </div>
-                <p className='flex justify-center text-5xl mb-4'>
+                <div className='flex justify-center text-5xl mb-4'>
                     Register
-                </p>
+                </div>
                 <div className='flex flex-col  w-2/6 h-5/6'>       
                     <input type="text" value="" 
                     className='border-2'
