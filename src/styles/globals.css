@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-table, th, td {
-  border: 3px solid black;
-  text-align: center;
+thead, th {
+  padding: 10px;
   font-size: larger;
+  text-align: left;
+  background-color: #DDEAFF;
+  /* color: rgb(12, 0, 120); */
+}
+
+tbody, tr, td {
+  padding: 10px;
 }
 
 /* :root {
