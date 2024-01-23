@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('Info') || '[]');
     setUserInfo(storedData);
-  }, [userInfo]);
+  }, []);
 
   
   const handleMouseOver = (index: any) => {
@@ -39,6 +39,7 @@ export default function Home() {
     // localStorage.removeItem('Info')
     const DeletedData = storedData.filter((item:any, index:any) => index !== indexed);
     localStorage.setItem('Info', JSON.stringify(DeletedData));
+    setUserInfo(DeletedData);
   };
 
   const handleEdit = (index: any) => {
@@ -64,8 +65,8 @@ export default function Home() {
 
   return (
     <main className='flex bg-blue-50'>
-      <div className='bg-blue-600 rounded-r-xl p-4 w-1/6 h-screen'>
-        <p className='text-white text-5xl text-center'>
+      <div className='bg-blue-600 p-4 w-1/6 h-screen'>
+        <p className='text-blue-800 text-5xl text-center'>
           sidebar
         </p>
       </div>
@@ -83,11 +84,13 @@ export default function Home() {
             </div>
 
             <div className='my-5 '>
-              <button type="button"
-                onClick={() => router.push('/registerform')}
-                className='bg-blue-600 text-white py-2 px-5 rounded-xl '  
-                >CREATE NEW
-              </button>
+              <a href="/registerform">
+                <button type="button"
+                  // onClick={() => router.push('/registerform')}
+                  className='bg-blue-600 text-white py-2 px-5 rounded-xl'  
+                  >CREATE NEW
+                </button>
+              </a>
             </div>
           </div>
 
@@ -125,10 +128,11 @@ export default function Home() {
               <table className='w-full shadow-xl '>
                 <thead>
                   <tr>
-                    <th className='w-1/4'>Firstname</th>
-                    <th className='w-1/4'>Lastname</th>
-                    <th >Telephone</th>
-                    <th>E-Mail</th>
+                    <th className=''>Firstname</th>
+                    <th className=''>Lastname</th>
+                    <th className=''>Telephone</th>
+                    <th className=''>E-Mail</th>
+                    <th className=''>Birthday</th>
                   </tr>
                 </thead>
                 <tbody className='text-lg'>
@@ -142,15 +146,15 @@ export default function Home() {
                       <td>{item?.fname}</td>
                       <td>{item?.lname}</td>
                       <td>{item?.tel}</td>
+                      <td>{item?.email}</td>
                       <td className='flex justify-between relative'>
-                        <div className='' >{item?.email}</div>
+                        {item?.date}
                         {index === hoveredIndex && ( 
                           <div className='flex justify-around w-1/6 absolute right-10 bottom-4'>
                             <button type="button"
                               onClick={() => handleDelete(index)}
                               className='bg-slate-400 px-2 text-white text-sm rounded '  
                               ><FontAwesomeIcon icon={faTrashCan} style={{fontSize:'10px'}}/>
-                            
                             </button>
                             <button type="button"
                             onClick={() => handleEdit(index)}
