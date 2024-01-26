@@ -6,13 +6,14 @@ interface Props {
     onChangehandler:(e:any)=>void;
     value:any;
     formErrors?:any;
-    formType:any;
+    formType?:any;
+    inputName?:any;
 }
 
-const InputForm:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors,formType}) => {
+const InputForm:React.FC<Props> = ({inputName,icon,className,onChangehandler,value,formErrors,formType}) => {
 
     const handleFormType = () => {
-        let placeholder = '';
+        let placeholder = inputName;
         let maxLength = 30;
         let title = '';
         let id = '';
@@ -35,6 +36,12 @@ const InputForm:React.FC<Props> = ({icon,className,onChangehandler,value,formErr
                         title='Please Enter Only Numbers',
                         id='tel',
                         name='tel'
+                        break;
+            case 'address' : placeholder='Address',
+                        maxLength=20,
+                        title='Please Fill In Correct Information.',
+                        id='address',
+                        name='address'
                         break; 
             case 'email' : placeholder='E-Mail',
                         maxLength=30,
@@ -42,7 +49,11 @@ const InputForm:React.FC<Props> = ({icon,className,onChangehandler,value,formErr
                         id='email',
                         name='email'; 
                         break;
-            default:
+            default: placeholder=inputName,
+                    maxLength=30,
+                    title='Please Fill In Correct Information test.',
+                    id = 'sex',
+                    name = 'sex'; 
         } 
         
         return { placeholder, maxLength, title, id, name };
@@ -62,7 +73,7 @@ const InputForm:React.FC<Props> = ({icon,className,onChangehandler,value,formErr
             title={handleFormType().title}
             />
             {formErrors && 
-                <p style={{top:'45px'}} className="text-red-500 absolute">
+                <p style={{top:'45px', fontSize:'10px'}} className="text-red-500 absolute">
                     {formErrors}
                 </p>
             }

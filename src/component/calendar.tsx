@@ -13,8 +13,6 @@ interface Props {
 
 const InputBirthDay:React.FC<Props> = ({handleDateChange,selectedDate,icon,className}) => {
 
-      
-
     return (
         <div className={className}>
             <FontAwesomeIcon icon={icon} style={{zIndex:'1', position:'absolute', top:'12px', left:'20px', color:'grey', fontSize:'15px'}}/>
