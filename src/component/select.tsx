@@ -11,12 +11,6 @@ interface Props {
 
 const select:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors,inputName}) => {
     const idName = inputName.toLocaleLowerCase();
-    console.log(idName)
-
-    const handleFormType = () => {
-        
-        // return { placeholder, maxLength, title, id, name };
-    }
 
     return(
         <div className={className}>
@@ -24,6 +18,7 @@ const select:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors
 
             <select id={idName} name={idName}
             className="text-center  w-full h-full rounded-3xl "
+            onChange={onChangehandler}
             >
             <option className="text-slate-400" value="" disabled selected>Sex</option>
             <option value="male">Male</option>
@@ -36,3 +31,6 @@ const select:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors
 }
 
 export default select;
+{/* <option value={value}>{value}</option>
+<option value={value}>{value}</option>
+<option value={value}>{value}</option> */}

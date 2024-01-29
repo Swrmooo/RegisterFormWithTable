@@ -35,13 +35,13 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
     setIsEdited(true);
   };
 
-    const handleMouseOver = (index: number) => {
-      setHoveredIndex(index);
-    };
+    // const handleMouseOver = (index: number) => {
+    //   setHoveredIndex(index);
+    // };
   
-    const handleMouseOut = () => {
-      setHoveredIndex(-1)
-    };
+    // const handleMouseOut = () => {
+    //   setHoveredIndex(-1)
+    // };
 
     return (
         <div className='flex justify-center '>
@@ -60,8 +60,8 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
                     <tr key={index} className={`hover:bg-slate-200 ease-out duration-300 relative ${
                       index === hoveredIndex ? 'bg-gray-300' : ''
                     }`}
-                    onMouseOver={() => handleMouseOver(index)}
-                    onMouseOut={handleMouseOut}
+                      // onMouseOver={() => handleMouseOver(index)}
+                      // onMouseOut={handleMouseOut}
                     >
                       <td>{item?.fisrstName}</td>
                       <td>{item?.lastName}</td>
@@ -69,8 +69,7 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
                       <td>{item?.email}</td>
                       <td className='flex justify-between relative'>
                         {item?.birthDate}
-                        {index === hoveredIndex && ( 
-                          <div className='flex justify-around w-1/6 absolute right-10 bottom-4'>
+                        <div className='flex justify-around w-1/6 '>
                             <button type="button"
                               onClick={() => handleDelete(index)}
                               className='bg-slate-400 px-2 text-white text-sm rounded '  
@@ -81,8 +80,8 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
                               className='bg-blue-400 px-2 text-white text-sm rounded '  
                               ><FontAwesomeIcon icon={faPen} style={{fontSize:'10px'}}/>
                             </button>
-                          </div>
-                        )}
+                        </div>
+                        {/* {index === hoveredIndex && (  */}
                       </td>
                     </tr>
                   ))}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faMobileScreen, faEnvelope, faCakeCandles, faLocationDot, faMarsAndVenus} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faMobileScreen, faEnvelope, faCakeCandles, faLocationDot, faMarsAndVenus, faHeart} from '@fortawesome/free-solid-svg-icons';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import axios from 'axios';
@@ -10,11 +10,13 @@ import InputForm from './element/inputForm';
 import InputBirthDay from '../calendar'
 import ButtonFunc from '../button'
 import Select from '../select'
-import MultipleChoice from '../multipleChoice';
+import InputCheckBox from '../inputcheckbox';
+import InputFile from '../inputfile'
 
 export default function RegisterForm() {
     const router = useRouter();
     const [userInfo, setUserInfo] = useState([]);
+    const [preview, setPreview] = useState<string | null>(null)
     // const [userInfo, setUserInfo] = useState([]);
     const [startDate, setStartDate] = useState<Date>();
     const [formRegister, setFormRegister] = useState({
@@ -25,7 +27,7 @@ export default function RegisterForm() {
         date: '',
         avatar:'',
         sex:'',
-        interest:'',
+        interest:[] as any[],
       });
 
       const [formErrors, setFormErrors] = useState({
@@ -36,8 +38,42 @@ export default function RegisterForm() {
         date: '',
         avatar:'',
         sex:'',
-        interest:'',
+        interest:[] as any[],
       });
+
+      const onImageChange = (e:any) => {
+        if (e.target.files && e.target.files[0]) {
+          setPreview(URL.createObjectURL(e.target.files[0]));
+        }
+       }
+
+      const handleCheckBoxChange = (e:any) => {
+        const { checked, value } = e.target;
+        setFormRegister((prevData) => {
+          if (checked) {
+            return {
+              ...prevData,
+              interest: [...prevData.interest, value],
+            };
+          } else {
+            return {
+              ...prevData,
+              interest: prevData.interest.filter((interest) => interest !== value),
+            };
+          }
+        });
+        
+      };
+      
+
+      // const handleCheckBoxChange = (interest:any) => {
+      //   setFormRegister((prevFormRegister) => ({
+      //     ...prevFormRegister,
+      //     selectedOptions: [...prevFormRegister.interest, interest],
+      //   }));
+
+      //   console.log('interest-----',formRegister.interest)
+      // };
 
       const handleInput = (e:any, inputType:string) => {
         const { name, value } = e.target;
@@ -45,7 +81,7 @@ export default function RegisterForm() {
           ...prevData,
           [name]: value,
         }));
-        // console.log(formRegister.sex)
+
         let validCheck ;
         let errorMessage = '';
         switch (inputType) {
@@ -55,7 +91,6 @@ export default function RegisterForm() {
                       errorMessage = 'You must enter in Numbers only.'; break;
           case 'email' : validCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 
                       errorMessage = 'Please fill in information.'; break;
-          // case '' : errorMessage = 'Please fill in information.'; break;
           default: break;
         }
         
@@ -81,42 +116,20 @@ export default function RegisterForm() {
           ...prevData,
           date: formatTime,
         }));
-
-        console.log('datetesttt', formatTime)
       };
     
       const 
       handleSubmit = (e:any) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('id',''); 
-        formData.append('fisrstName', formRegister.fname);
-        formData.append('lastName', formRegister.lname);
-        formData.append('email', formRegister.email);
-        formData.append('address', formRegister.address);
-        formData.append('birthDate', formRegister.date);
+        // formData.append('id',''); 
+        // formData.append('fisrstName', formRegister.fname);
+        // formData.append('lastName', formRegister.lname);
+        // formData.append('email', formRegister.email);
+        // formData.append('address', formRegister.address);
+        // formData.append('birthDate', formRegister.date);
         // formData.append('iFileAvatar', 'https://api.pulsednsth.com/_devtest/49c67591-6311-4b1d-9b57-b6681b8954ab.png');
 
-        // const avatarFile = document.getElementById('iFileAvatar')?.files.[];
-
-        // formData.append('iFileAvatar', avatarFile);
-
-        formData.append('sex', 'male');
-        formData.append('interest', 'nothing');
-
-        // const dataUserInfo = {  
-        //   // id: '',
-        //   // fisrstName: formRegister.fname,
-        //   // lastName: formRegister.lname,
-        //   // email: formRegister.email,
-        //   // address: formRegister.address,
-        //   // birthDate: formRegister.date,
-        //   // iFileAvatar: 'https://api.pulsednsth.com/_devtest/49c67591-6311-4b1d-9b57-b6681b8954ab.png',
-        //   // sex: 'male',
-        //   // interest: 'thing',
-        //   // interest: 'thing'
-        //   // 'interest[]': ['not','thing',]
-        // };
 
         axios.post('https://api.pulsednsth.com/devtest/create', formData).then((response) => {
           if (response.status === 201) {
@@ -132,12 +145,23 @@ export default function RegisterForm() {
         console.log('----',formData)
       };
 
+      // console.log('interest-----',formRegister.interest)
+      console.log('form' ,formRegister)
+
   return (
         <form style={{width:'500px', height:'600px'}} className='bg-white shadow-xl shadow-blue-300/100 rounded-3xl'> 
             <div className='flex flex-col items-center justify-between h-full w-full px-16'> 
                 <div className='font-semibold text-xl'>
                     Hello! Welcome
                 </div>
+
+                <input type="file" onChange={onImageChange} className="filetype" />
+                <img alt="preview image" src={preview}/>
+
+                {/* <InputFile
+                onChangehandler={onImageChange}
+                image={preview}
+                /> */}
                   
                 <div className='flex'>
                   <InputForm 
@@ -195,11 +219,43 @@ export default function RegisterForm() {
                 />
               
               <div className='relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-20 rounded-3xl'>
-                <MultipleChoice
-                  className={''}
-                />
+                <div className='w-full pl-5 text-slate-400'>
+                  <FontAwesomeIcon icon={faHeart} style={{marginRight:'5px',color:'grey',fontSize:'13px'}}/>
+                  Interesting
+                </div>
+                <div className='flex justify-around'>
+                  <div>
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Sport'} 
+                    />
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Health'}
+                  />
+                  </div>
+                  <div>
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Investment'}
+                    />
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Pet'}
+                    />
+                  </div>
+                  <div>
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Food'}
+                    />
+                    <InputCheckBox
+                      onChangehandler={handleCheckBoxChange}
+                      value={'Fashion'}
+                    />
+                  </div>
+                </div>
               </div>
-              
 
               {/* button */}
               <div className='w-full flex flex-col items-center'>
@@ -209,7 +265,6 @@ export default function RegisterForm() {
                     buttonType={'text'}
                     cssDiv={'flex justify-center w-3/4 text-white'}
                     cssButton={'bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
-                    // icon={}
                 />
 
                 <p className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'

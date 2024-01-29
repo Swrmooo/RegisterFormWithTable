@@ -26,7 +26,7 @@ export default function Home() {
     // setUserInfo(storedData);
 
     axios.get('https://api.pulsednsth.com/devtest/get/all').then((response) => {
-        console.log(response)
+        // console.log(response)
         setUserInfo(response.data)
         // setTimeout(() => {
         //   setData(response.data)
@@ -68,7 +68,7 @@ export default function Home() {
               Information
             </div>
 
-            <div className='my-5 '>
+            <div className='my-5'>
               <a href="/register">
                 <button type="button"
                   // onClick={() => router.push('/registerform')}
