@@ -5,10 +5,8 @@ import axios from 'axios';
 
 import FormTable from '../component/table'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
-  const router = useRouter();
+  
   const [userInfo, setUserInfo] = useState([]);
   const [indexToEdit, setIndexToEdit] = useState([]);
   const [isEdited, setIsEdited] = useState(false);
@@ -22,19 +20,28 @@ export default function Home() {
   });
 
   useEffect(() => {
-    // const storedData = JSON.parse(localStorage.getItem('Info') || '[]');
-    // setUserInfo(storedData);
 
     axios.get('https://api.pulsednsth.com/devtest/get/all').then((response) => {
         // console.log(response)
         setUserInfo(response.data)
-        // setTimeout(() => {
-        //   setData(response.data)
-        //   console.log(data)
-        // }, );
     });
 
-  }, []);
+  }, [userInfo]);
+
+  const onClickDetail = (index: any) => {
+  };
+
+  const handleDelete = (index: any) => {
+    // console.log('------', index)
+    // const itemToDelete = userInfo[index];
+    axios.post(`https://api.pulsednsth.com/devtest/delete/${index}`).then((response) => {
+      setUserInfo((prevData) => [
+        ...prevData.slice(0, index),
+        ...prevData.slice(index + 1),
+      ]);
+    });
+  };
+  
 
   const handleSaveEdit = () => {
     if (editForm && typeof indexToEdit === 'number') {
@@ -80,7 +87,10 @@ export default function Home() {
           </div>
 
           <div>
-            <FormTable dataInfo={userInfo}/>
+            <FormTable 
+            dataInfo={userInfo}
+            handleDelete={handleDelete}
+            />
           </div>
           
           {/* edit form */}

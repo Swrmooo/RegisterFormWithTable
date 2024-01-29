@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrashCan, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-export default function Table({ dataInfo }: { dataInfo: any }) {
+interface Props {
+  handleDelete:(e:any)=>void;
+  dataInfo: any;
+
+}
+
+// const InputCheckBox:React.FC<Props> =
+const Table:React.FC<Props> = ({dataInfo,handleDelete}) => {
+    const router = useRouter();
     const [userInfo, setUserInfo] = useState([dataInfo]);
     const [indexToEdit, setIndexToEdit] = useState([]);
     const [isEdited, setIsEdited] = useState(false);
@@ -13,18 +22,22 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
       address: '',
       email: '',
       birthDate: '',
+      // date: '',
+      avatar:'',
+      sex:'',
+      interest:[] as any[],
     });
 
   useEffect(() => {
     setUserInfo(dataInfo);
   }, [dataInfo]);
 
-  const handleDelete = (indexed: any) => {
-    const storedData = JSON.parse(localStorage.getItem('Info') || '[]');
-    const DeletedData = storedData.filter((item:any, index:any) => index !== indexed);
-    localStorage.setItem('Info', JSON.stringify(DeletedData));
-    setUserInfo(DeletedData);
-  };
+  // const handleDelete = (indexed: any) => {
+  //   const storedData = JSON.parse(localStorage.getItem('Info') || '[]');
+  //   const DeletedData = storedData.filter((item:any, index:any) => index !== indexed);
+  //   localStorage.setItem('Info', JSON.stringify(DeletedData));
+  //   setUserInfo(DeletedData);
+  // };
   
   const handleEdit = (index: any) => {
     setIndexToEdit(index);
@@ -70,11 +83,18 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
                       <td className='flex justify-between relative'>
                         {item?.birthDate}
                         <div className='flex justify-around w-1/6 '>
+                          <button type="button"
+                              onClick={() => router.push(`/${item.id}`)}
+                              className='bg-yellow-400 px-2 text-white text-sm rounded '  
+                              ><FontAwesomeIcon icon={faMagnifyingGlass} style={{fontSize:'10px'}}/>
+                            </button>
+
                             <button type="button"
-                              onClick={() => handleDelete(index)}
+                              onClick={() => handleDelete(item.id)}
                               className='bg-slate-400 px-2 text-white text-sm rounded '  
                               ><FontAwesomeIcon icon={faTrashCan} style={{fontSize:'10px'}}/>
                             </button>
+
                             <button type="button"
                             onClick={() => handleEdit(index)}
                               className='bg-blue-400 px-2 text-white text-sm rounded '  
@@ -90,3 +110,4 @@ export default function Table({ dataInfo }: { dataInfo: any }) {
         </div>  
   )
 }
+export default Table;

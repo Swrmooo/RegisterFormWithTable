@@ -16,7 +16,7 @@ import InputFile from '../inputfile'
 export default function RegisterForm() {
     const router = useRouter();
     const [userInfo, setUserInfo] = useState([]);
-    const [preview, setPreview] = useState<string | null>(null)
+    const [preview, setPreview] = useState<string>()
     // const [userInfo, setUserInfo] = useState([]);
     const [startDate, setStartDate] = useState<Date>();
     const [formRegister, setFormRegister] = useState({
