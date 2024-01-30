@@ -16,7 +16,7 @@ import InputFile from '../inputfile'
 export default function RegisterForm() {
     const router = useRouter();
     const [userInfo, setUserInfo] = useState([]);
-    const [preview, setPreview] = useState<string>()
+    const [previewImage, setPreviewImage] = useState<string>()
     // const [userInfo, setUserInfo] = useState([]);
     const [startDate, setStartDate] = useState<Date>();
     const [formRegister, setFormRegister] = useState({
@@ -40,12 +40,14 @@ export default function RegisterForm() {
         sex:'',
         interest:[] as any[],
       });
-
-      const onImageChange = (e:any) => {
-        if (e.target.files && e.target.files[0]) {
-          setPreview(URL.createObjectURL(e.target.files[0]));
-        }
-       }
+      
+      const handleImageChange = (value: string) => {
+        setFormRegister((prevData) => ({
+          ...prevData,
+          avatar: value,
+        }));
+        console.log('========',value)
+      }
 
       const handleCheckBoxChange = (e:any) => {
         const { checked, value } = e.target;
@@ -64,16 +66,6 @@ export default function RegisterForm() {
         });
         
       };
-      
-
-      // const handleCheckBoxChange = (interest:any) => {
-      //   setFormRegister((prevFormRegister) => ({
-      //     ...prevFormRegister,
-      //     selectedOptions: [...prevFormRegister.interest, interest],
-      //   }));
-
-      //   console.log('interest-----',formRegister.interest)
-      // };
 
       const handleInput = (e:any, inputType:string) => {
         const { name, value } = e.target;
@@ -109,7 +101,6 @@ export default function RegisterForm() {
       };
 
       const handleDateChange = (date:Date) => {
-        // const formatTime = moment(date).format('D-MMM-YYYY')
         const formatTime = moment(date).format('YYYY-MM-D')
         setStartDate(date);
         setFormRegister((prevData) => ({
@@ -118,21 +109,29 @@ export default function RegisterForm() {
         }));
       };
     
-      const 
-      handleSubmit = (e:any) => {
+      const handleSubmit = (e:any) => {
         e.preventDefault();
         const formData = new FormData();
         // formData.append('id',''); 
-        // formData.append('fisrstName', formRegister.fname);
-        // formData.append('lastName', formRegister.lname);
-        // formData.append('email', formRegister.email);
-        // formData.append('address', formRegister.address);
-        // formData.append('birthDate', formRegister.date);
-        // formData.append('iFileAvatar', 'https://api.pulsednsth.com/_devtest/49c67591-6311-4b1d-9b57-b6681b8954ab.png');
+        formData.append('fisrstName', formRegister.fname);
+        formData.append('lastName', formRegister.lname);
+        formData.append('email', formRegister.email);
+        formData.append('address', formRegister.address);
+        formData.append('birthDate', formRegister.date);
+        formData.append('iFileAvatar', formRegister.avatar);
+        formData.append('sex', formRegister.sex);
+        // formData.append('interest', formRegister.interest[]);
+        formRegister.interest.forEach((interest, index) => {
+          formData.append(`interest[${index}]`, interest);
+        });
 
+        // axios.post('https://api.pulsednsth.com/devtest/create', formData)
+        // .then((response) => {
+          
+        // })
 
         axios.post('https://api.pulsednsth.com/devtest/create', formData).then((response) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             console.log('created successfully:', response.data);
           } else {
             console.error('Failed to create :', response.status, response.data);
@@ -145,23 +144,19 @@ export default function RegisterForm() {
         console.log('----',formData)
       };
 
-      // console.log('interest-----',formRegister.interest)
       console.log('form' ,formRegister)
 
   return (
-        <form style={{width:'500px', height:'600px'}} className='bg-white shadow-xl shadow-blue-300/100 rounded-3xl'> 
+        <form style={{width:'500px', height:'800px'}} className='bg-white shadow-xl shadow-blue-300/100 rounded-3xl'> 
             <div className='flex flex-col items-center justify-between h-full w-full px-16'> 
                 <div className='font-semibold text-xl'>
                     Hello! Welcome
                 </div>
 
-                <input type="file" onChange={onImageChange} className="filetype" />
-                <img alt="preview image" src={preview}/>
-
-                {/* <InputFile
-                onChangehandler={onImageChange}
-                image={preview}
-                /> */}
+                <InputFile
+                onChangehandler={handleImageChange}
+                previewImage={previewImage}
+                />
                   
                 <div className='flex'>
                   <InputForm 
@@ -259,12 +254,12 @@ export default function RegisterForm() {
 
               {/* button */}
               <div className='w-full flex flex-col items-center'>
-                <ButtonFunc
+              <ButtonFunc
                     text={'submit'}
                     onClick={handleSubmit}
                     buttonType={'text'}
-                    cssDiv={'flex justify-center w-3/4 text-white'}
-                    cssButton={'bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
+                    cusDiv={'flex justify-center w-3/4 text-white'}
+                    cusButton={'bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
                 />
 
                 <p className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'

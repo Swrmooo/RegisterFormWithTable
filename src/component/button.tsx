@@ -5,19 +5,19 @@ interface Props {
   // onClick:(e:any)=>void;
    onClick:any;
   buttonType:any;
-  cssDiv:any;
-  cssButton:any;
+  cusDiv?:any;
+  cusButton?:any;
   // icon:any;
 }
 
-const buttonFunc:React.FC<Props> = ({cssButton,cssDiv,buttonType,onClick,text}) => {
+const buttonFunc:React.FC<Props> = ({cusButton,cusDiv,buttonType,onClick,text}) => {
 
   return (
     // <div className='flex justify-center w-3/4 text-white'>
-    <div className={cssDiv}>
+    <div className={cusDiv}>
       <button type={buttonType}
         onClick={onClick}
-        className={cssButton}
+        className={cusButton}
         >
           {text}
       </button>          

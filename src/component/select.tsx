@@ -16,11 +16,11 @@ const select:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors
         <div className={className}>
             <FontAwesomeIcon icon={icon} style={{zIndex:'1', position:'absolute', left:'15px', color:'grey', fontSize:'15px'}}/>
 
-            <select id={idName} name={idName}
+            <select id={idName} name={idName} value={''}
             className="text-center  w-full h-full rounded-3xl "
             onChange={onChangehandler}
             >
-            <option className="text-slate-400" value="" disabled selected>Sex</option>
+            <option className="text-slate-400" value="" disabled>Sex</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="lgbtq+">LGBTQ+</option>

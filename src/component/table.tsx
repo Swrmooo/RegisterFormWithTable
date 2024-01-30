@@ -48,13 +48,13 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete}) => {
     setIsEdited(true);
   };
 
-    // const handleMouseOver = (index: number) => {
-    //   setHoveredIndex(index);
-    // };
+    const handleMouseOver = (index: number) => {
+      setHoveredIndex(index);
+    };
   
-    // const handleMouseOut = () => {
-    //   setHoveredIndex(-1)
-    // };
+    const handleMouseOut = () => {
+      setHoveredIndex(-1)
+    };
 
     return (
         <div className='flex justify-center '>
@@ -95,11 +95,11 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete}) => {
                               ><FontAwesomeIcon icon={faTrashCan} style={{fontSize:'10px'}}/>
                             </button>
 
-                            <button type="button"
+                            {/* <button type="button"
                             onClick={() => handleEdit(index)}
                               className='bg-blue-400 px-2 text-white text-sm rounded '  
                               ><FontAwesomeIcon icon={faPen} style={{fontSize:'10px'}}/>
-                            </button>
+                            </button> */}
                         </div>
                         {/* {index === hoveredIndex && (  */}
                       </td>
