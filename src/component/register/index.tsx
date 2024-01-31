@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faMobileScreen, faEnvelope, faCakeCandles, faLocationDot, faMarsAndVenus, faHeart} from '@fortawesome/free-solid-svg-icons';
@@ -13,13 +13,20 @@ import Select from '../select'
 import InputCheckBox from '../inputcheckbox';
 import InputFile from '../inputfile'
 
-export default function RegisterForm() {
+interface Props {
+  data?:any;
+}
+
+let a:any = [];
+
+const RegisterForm:React.FC<Props> = ({data}) => {
+// export default function RegisterForm ()  {
     const router = useRouter();
-    const [userInfo, setUserInfo] = useState([]);
+    const [statusSubmit, setStatusSubmit] = useState('create');
     const [previewImage, setPreviewImage] = useState<string>()
-    // const [userInfo, setUserInfo] = useState([]);
     const [startDate, setStartDate] = useState<Date>();
     const [formRegister, setFormRegister] = useState({
+        id: '',
         fname: '',
         lname: '',
         address: '',
@@ -31,6 +38,7 @@ export default function RegisterForm() {
       });
 
       const [formErrors, setFormErrors] = useState({
+        id: '',
         fname: '',
         lname: '',
         address: '',
@@ -40,30 +48,55 @@ export default function RegisterForm() {
         sex:'',
         interest:[] as any[],
       });
+
+      useEffect(() => {
+        const { query } = router;
+        // if (data.fisrstName) {
+          setFormRegister({
+            id: data?.id as string,
+            fname: data?.fisrstName as string,
+            lname: data?.lastName as string,
+            address: data?.address as string,
+            email: data?.email as string,
+            date: data?.birthDate as string,
+            avatar: data?.avatar as string,
+            sex: data?.sex as string,
+            // interest: JSON.parse(data.interest as string),
+            interest: data?.interest,
+          });
+        // }
+        // console.log('=-==-==',formRegister)
+      }, [router.query]);
       
       const handleImageChange = (value: string) => {
         setFormRegister((prevData) => ({
           ...prevData,
           avatar: value,
         }));
-        console.log('========',value)
+        // console.log('========',value)
       }
+      
 
       const handleCheckBoxChange = (e:any) => {
         const { checked, value } = e.target;
-        setFormRegister((prevData) => {
+        
+        if(checked){
+          a.push(value)
+        }
+        setFormRegister((prevData:any) => {
           if (checked) {
             return {
               ...prevData,
-              interest: [...prevData.interest, value],
+              interest: [value],
             };
           } else {
             return {
               ...prevData,
-              interest: prevData.interest.filter((interest) => interest !== value),
+              interest: prevData.interest.filter((interest:any) => interest !== value),
             };
           }
         });
+        console.log(a);
         
       };
 
@@ -109,10 +142,12 @@ export default function RegisterForm() {
         }));
       };
     
-      const handleSubmit = (e:any) => {
+      const handleSubmit = (e:any, statusSubmit:string) => {
+        const confirmStatus = statusSubmit;
+        console.log('confirmStatus',confirmStatus)
         e.preventDefault();
         const formData = new FormData();
-        // formData.append('id',''); 
+        formData.append('id',formRegister.id); 
         formData.append('fisrstName', formRegister.fname);
         formData.append('lastName', formRegister.lname);
         formData.append('email', formRegister.email);
@@ -120,30 +155,35 @@ export default function RegisterForm() {
         formData.append('birthDate', formRegister.date);
         formData.append('iFileAvatar', formRegister.avatar);
         formData.append('sex', formRegister.sex);
-        // formData.append('interest', formRegister.interest[]);
         formRegister.interest.forEach((interest, index) => {
           formData.append(`interest[${index}]`, interest);
         });
 
-        // axios.post('https://api.pulsednsth.com/devtest/create', formData)
-        // .then((response) => {
-          
-        // })
+        if(confirmStatus === 'create'){
+          axios.post('https://api.pulsednsth.com/devtest/create', formData).then((response) => {
+            if (response.status === 200) {
+              console.log('created successfully:', response.data);
+            } else {
+              console.error('Failed to create :', response.status, response.data);
+            }
 
-        axios.post('https://api.pulsednsth.com/devtest/create', formData).then((response) => {
-          if (response.status === 200) {
-            console.log('created successfully:', response.data);
-          } else {
-            console.error('Failed to create :', response.status, response.data);
-          }
+          }).catch((error) => {
+            console.error('An error occurred:', error);
+          });;
+        } else if (confirmStatus === 'edit'){
+          axios.post('https://api.pulsednsth.com/devtest/update', formData).then((response) => {
+            if (response.status === 200) {
+              console.log('Edited successfully:', response.data);
+            } else {
+              console.error('Failed to edit :', response.status, response.data);
+            }
 
-        }).catch((error) => {
-          console.error('An error occurred:', error);
-        });;
-        
-        console.log('----',formData)
+          }).catch((error) => {
+            console.error('An error occurred:', error);
+          });;
+        }
       };
-
+      console.log('statusSubmit', statusSubmit)
       console.log('form' ,formRegister)
 
   return (
@@ -152,13 +192,14 @@ export default function RegisterForm() {
                 <div className='font-semibold text-xl'>
                     Hello! Welcome
                 </div>
-
+                
                 <InputFile
                 onChangehandler={handleImageChange}
                 previewImage={previewImage}
                 />
                   
                 <div className='flex'>
+                {console.log(RegisterForm)}
                   <InputForm 
                       value={formRegister.fname} 
                       formErrors={formErrors.fname}
@@ -256,19 +297,23 @@ export default function RegisterForm() {
               <div className='w-full flex flex-col items-center'>
               <ButtonFunc
                     text={'submit'}
-                    onClick={handleSubmit}
+                    onClick={(e:any) => handleSubmit(e, statusSubmit)}
                     buttonType={'text'}
                     cusDiv={'flex justify-center w-3/4 text-white'}
                     cusButton={'bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
                 />
 
-                <p className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'
-                onClick={() => router.push('/')}
-                >
-                    Already Have Account ?
-                </p>
+                <a href="/">
+                  <p className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'
+                  >
+                      Already Have Account ?
+                  </p>
+                </a>
+                
               </div>
             </div> 
           </form>
   )
 }
+
+export default RegisterForm;

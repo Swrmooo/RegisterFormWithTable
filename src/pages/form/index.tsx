@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import Form from '../component/register'
+
+import Form from '../../component/register'
 
 export default function Register() {
 
@@ -20,3 +21,4 @@ export default function Register() {
       </main>
   )
 }
+

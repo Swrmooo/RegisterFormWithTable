@@ -11,19 +11,20 @@ interface Props {
 
 const select:React.FC<Props> = ({icon,className,onChangehandler,value,formErrors,inputName}) => {
     const idName = inputName.toLocaleLowerCase();
+    // console.log('===============',idName)
 
     return(
         <div className={className}>
             <FontAwesomeIcon icon={icon} style={{zIndex:'1', position:'absolute', left:'15px', color:'grey', fontSize:'15px'}}/>
 
-            <select id={idName} name={idName} value={''}
-            className="text-center  w-full h-full rounded-3xl "
+            <select id={idName} name={idName} value={value}
+            className="text-center w-full h-full rounded-3xl "
             onChange={onChangehandler}
             >
             <option className="text-slate-400" value="" disabled>Sex</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="lgbtq+">LGBTQ+</option>
+            <option value="lgbtq">LGBTQ</option>
         </select> 
         </div>
            

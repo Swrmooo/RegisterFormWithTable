@@ -6,21 +6,10 @@ import axios from 'axios';
 import FormTable from '../component/table'
 
 export default function Home() {
-  
   const [userInfo, setUserInfo] = useState([]);
-  const [indexToEdit, setIndexToEdit] = useState([]);
-  const [isEdited, setIsEdited] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState(-1);
-  const [editForm, setEditForm] = useState({
-    fname: '',
-    lname: '',
-    tel: '',
-    email: '',
-    date: '',
-  });
-
+  const [statusSubmit, setStatusSubmit] = useState('');
+  
   useEffect(() => {
-
     axios.get('https://api.pulsednsth.com/devtest/get/all').then((response) => {
         // console.log(response)
         setUserInfo(response.data)
@@ -28,31 +17,13 @@ export default function Home() {
 
   }, [userInfo]);
 
-  const onClickDetail = (index: any) => {
-  };
-
   const handleDelete = (index: any) => {
-    // console.log('------', index)
-    // const itemToDelete = userInfo[index];
     axios.post(`https://api.pulsednsth.com/devtest/delete/${index}`).then((response) => {
       setUserInfo((prevData) => [
         ...prevData.slice(0, index),
         ...prevData.slice(index + 1),
       ]);
     });
-  };
-  
-
-  const handleSaveEdit = () => {
-    if (editForm && typeof indexToEdit === 'number') {
-      const storedData = JSON.parse(localStorage.getItem('Info') || '[]');
-      storedData[indexToEdit] = editForm;
-  
-      localStorage.setItem('Info', JSON.stringify(storedData));
-  
-      setUserInfo(storedData);
-      setIsEdited(false);
-    }
   };
 
   return (
@@ -76,12 +47,8 @@ export default function Home() {
             </div>
 
             <div className='my-5'>
-              <a href="/register">
-                <button type="button"
-                  // onClick={() => router.push('/registerform')}
-                  className='bg-blue-600 text-white py-2 px-5 rounded-xl'  
-                  >CREATE NEW
-                </button>
+              <a href="/form" className='bg-blue-600 text-white py-2 px-5 rounded-xl'>
+              CREATE NEW
               </a>
             </div>
           </div>
@@ -90,40 +57,11 @@ export default function Home() {
             <FormTable 
             dataInfo={userInfo}
             handleDelete={handleDelete}
+            // handleEdit={handleEdit}
+            // statusSubmit={statusSubmit}
             />
           </div>
-          
-          {/* edit form */}
-          {/* {isEdited === true &&(
-            <div className='flex justify-between mb-5'>
-              <input type="text" id="fname" name="fname" 
-              value={editForm.fname}
-              onChange={(e) => setEditForm({ ...editForm, fname: e.target.value})}
-              />
-              <input type="text" id="lname" name="lname"
-              value={editForm.lname}
-              onChange={(e) => setEditForm({ ...editForm, lname: e.target.value})}
-              />
-              <input type="tel" id="tel" name="tel"
-              value={editForm.tel}
-              onChange={(e) => setEditForm({ ...editForm, tel: e.target.value})}
-              />
-              <input type="email" id="email" name="email"
-              value={editForm.email}
-              onChange={(e) => setEditForm({ ...editForm, email: e.target.value})}
-              />
 
-              <button type="button"
-               onClick={handleSaveEdit}
-               className='bg-yellow-400 px-2 text-white text-sm rounded'  
-              >
-                <FontAwesomeIcon icon={faPen} style={{fontSize:'10px'}}/>
-              </button>
-            </div>
-          )} */}
-        
-          
-          
         </div>
       </div>
     </main>

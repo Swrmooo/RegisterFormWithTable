@@ -7,33 +7,28 @@ thead, th {
   font-size: larger;
   text-align: left;
   background-color: #DDEAFF;
-  /* color: rgb(12, 0, 120); */
 }
 
 tbody, tr, td {
   padding: 10px;
 }
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.hiding {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 15px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* .menuHover:hover , .hiding  { */
+/* tr.menuHover:hover .hiding{ */
+  .menuHover:hover .hiding{
+  display:block;
+  
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+.menuHover:hover td {
+  background-color: #c1d0d8;
+  transition: background-color 300ms ease-out;
+  
+}
