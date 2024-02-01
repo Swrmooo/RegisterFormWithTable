@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Inter } from 'next/font/google'
-import { useRouter } from 'next/router';
 import axios from 'axios';
 
 import FormTable from '../component/table'
 
 export default function Home() {
   const [userInfo, setUserInfo] = useState([]);
-  const [statusSubmit, setStatusSubmit] = useState('');
   
   useEffect(() => {
     axios.get('https://api.pulsednsth.com/devtest/get/all').then((response) => {
         // console.log(response)
         setUserInfo(response.data)
     });
-
   }, [userInfo]);
 
   const handleDelete = (index: any) => {
@@ -28,21 +24,21 @@ export default function Home() {
 
   return (
     <main className='flex bg-blue-50'>
-      <div className='bg-blue-600 p-4 w-1/6 h-screen'>
+      <div className='bg-blue-600 p-4 w-1/6'>
         <p className='text-blue-800 text-5xl text-center'>
           sidebar
         </p>
       </div>
 
-      <div className='w-5/6 h-screen'>
-        <div className='bg-white h-14'>
+      <div className='w-5/6'>
+        <div className='bg-white h-12'>
             header
         </div>
         {/* content*/}
-        <div className='mx-20'>
-          <div className='flex justify-between '>
+        <div className='mx-10'>
+          <div className='flex justify-between item-center'>
             {/* title*/}
-            <div className=' text-5xl my-5'>
+            <div className=' text-5xl'>
               Information
             </div>
 
@@ -53,7 +49,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div className='my-10'>
             <FormTable 
             dataInfo={userInfo}
             handleDelete={handleDelete}

@@ -8,11 +8,11 @@ interface Props {
 }
 
 // export default function Register() {
-     const Register:React.FC<Props> = ({info}) => {
-        console.log('===============',info)
+const Register:React.FC<Props> = ({info}) => {
+        // console.log('===============',info)
 
     return (
-      <main className='bg-blue-50 h-screen'>
+      <main className='bg-blue-50'>
 
         <div className='flex justify-center text-4xl pb-10'>
           Register Form
@@ -20,7 +20,7 @@ interface Props {
           
         <div className=' h-3/6 flex justify-center'>
 
-          <Form data={info}/>
+          <Form data={info} onSubmit={'edit'}/>
           
         </div>
 

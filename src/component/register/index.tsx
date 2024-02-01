@@ -5,6 +5,8 @@ import { faUser, faMobileScreen, faEnvelope, faCakeCandles, faLocationDot, faMar
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import axios from 'axios';
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
 
 import InputForm from './element/inputForm';
 import InputBirthDay from '../calendar'
@@ -15,11 +17,10 @@ import InputFile from '../inputfile'
 
 interface Props {
   data?:any;
+  onSubmit?:any;
 }
 
-let a:any = [];
-
-const RegisterForm:React.FC<Props> = ({data}) => {
+const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
 // export default function RegisterForm ()  {
     const router = useRouter();
     const [statusSubmit, setStatusSubmit] = useState('create');
@@ -51,21 +52,23 @@ const RegisterForm:React.FC<Props> = ({data}) => {
 
       useEffect(() => {
         const { query } = router;
-        // if (data.fisrstName) {
-          setFormRegister({
-            id: data?.id as string,
-            fname: data?.fisrstName as string,
-            lname: data?.lastName as string,
-            address: data?.address as string,
-            email: data?.email as string,
-            date: data?.birthDate as string,
-            avatar: data?.avatar as string,
-            sex: data?.sex as string,
-            // interest: JSON.parse(data.interest as string),
-            interest: data?.interest,
-          });
-        // }
-        // console.log('=-==-==',formRegister)
+          if(data){
+            setFormRegister({
+              id: data?.id as string,
+              fname: data?.fisrstName as string,
+              lname: data?.lastName as string,
+              address: data?.address as string,
+              email: data?.email as string,
+              date: moment(data?.birthDate).format('YYYY-MM-DD') as string,
+              avatar: data?.avatar as string,
+              sex: data?.sex as string,
+              interest: data?.interest,
+            });
+            setPreviewImage(data?.avatar) 
+            if (onSubmit) {
+              setStatusSubmit(onSubmit); 
+            }
+          }
       }, [router.query]);
       
       const handleImageChange = (value: string) => {
@@ -73,21 +76,15 @@ const RegisterForm:React.FC<Props> = ({data}) => {
           ...prevData,
           avatar: value,
         }));
-        // console.log('========',value)
       }
-      
 
       const handleCheckBoxChange = (e:any) => {
         const { checked, value } = e.target;
-        
-        if(checked){
-          a.push(value)
-        }
-        setFormRegister((prevData:any) => {
+        setFormRegister((prevData) => {
           if (checked) {
             return {
               ...prevData,
-              interest: [value],
+              interest: [...prevData?.interest, value],
             };
           } else {
             return {
@@ -95,9 +92,7 @@ const RegisterForm:React.FC<Props> = ({data}) => {
               interest: prevData.interest.filter((interest:any) => interest !== value),
             };
           }
-        });
-        console.log(a);
-        
+        });  
       };
 
       const handleInput = (e:any, inputType:string) => {
@@ -134,7 +129,8 @@ const RegisterForm:React.FC<Props> = ({data}) => {
       };
 
       const handleDateChange = (date:Date) => {
-        const formatTime = moment(date).format('YYYY-MM-D')
+        console.log(date)
+        const formatTime = moment(date).format('YYYY-M-D')
         setStartDate(date);
         setFormRegister((prevData) => ({
           ...prevData,
@@ -142,7 +138,7 @@ const RegisterForm:React.FC<Props> = ({data}) => {
         }));
       };
     
-      const handleSubmit = (e:any, statusSubmit:string) => {
+      const handleSubmit = (e:any) => {
         const confirmStatus = statusSubmit;
         console.log('confirmStatus',confirmStatus)
         e.preventDefault();
@@ -163,8 +159,20 @@ const RegisterForm:React.FC<Props> = ({data}) => {
           axios.post('https://api.pulsednsth.com/devtest/create', formData).then((response) => {
             if (response.status === 200) {
               console.log('created successfully:', response.data);
+              Swal.fire({
+                title: "Create Successfully:!",
+                icon: "success"
+              }).then(() => {
+                window.location.href = '/';
+              });
             } else {
               console.error('Failed to create :', response.status, response.data);
+              Swal.fire({
+                title: "Failed to create!",
+                icon: "warning"
+              }).then(() => {
+                window.location.href = '/';
+              });;
             }
 
           }).catch((error) => {
@@ -174,8 +182,20 @@ const RegisterForm:React.FC<Props> = ({data}) => {
           axios.post('https://api.pulsednsth.com/devtest/update', formData).then((response) => {
             if (response.status === 200) {
               console.log('Edited successfully:', response.data);
+              Swal.fire({
+                title: "Edited successfully:!",
+                icon: "success"
+              }).then(() => {
+                window.location.href = '/';
+              });;
             } else {
               console.error('Failed to edit :', response.status, response.data);
+              Swal.fire({
+                title: "Failed to edit!",
+                icon: "warning"
+              }).then(() => {
+                window.location.href = '/';
+              });;
             }
 
           }).catch((error) => {
@@ -183,11 +203,10 @@ const RegisterForm:React.FC<Props> = ({data}) => {
           });;
         }
       };
-      console.log('statusSubmit', statusSubmit)
-      console.log('form' ,formRegister)
+      console.log(formRegister)
 
   return (
-        <form style={{width:'500px', height:'800px'}} className='bg-white shadow-xl shadow-blue-300/100 rounded-3xl'> 
+        <form style={{width:'500px', height:'650px'}} className='bg-white shadow-xl shadow-blue-300/100 rounded-3xl'> 
             <div className='flex flex-col items-center justify-between h-full w-full px-16'> 
                 <div className='font-semibold text-xl'>
                     Hello! Welcome
@@ -199,7 +218,7 @@ const RegisterForm:React.FC<Props> = ({data}) => {
                 />
                   
                 <div className='flex'>
-                {console.log(RegisterForm)}
+                {/* {console.log(RegisterForm)} */}
                   <InputForm 
                       value={formRegister.fname} 
                       formErrors={formErrors.fname}
@@ -233,13 +252,14 @@ const RegisterForm:React.FC<Props> = ({data}) => {
                       handleDateChange={handleDateChange}
                       selectedDate={startDate}
                       icon={faCakeCandles}
+                      value={formRegister.date}
                       className={'relative flex justify-center items-center shadow-xl shadow-blue-300/30 rounded-3xl w-5/12'}
                   />
 
                   <Select
                     icon={faMarsAndVenus}
                     onChangehandler={(e) => handleInput(e, 'sex')} 
-                    value={formRegister.sex}
+                    value={formRegister.sex.trim()}
                     inputName={'Sex'}
                     className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-5/12 h-10 rounded-3xl'}
                   />
@@ -264,30 +284,36 @@ const RegisterForm:React.FC<Props> = ({data}) => {
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Sport'} 
+                      selected={formRegister.interest}
                     />
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Health'}
+                      selected={formRegister.interest}
                   />
                   </div>
                   <div>
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Investment'}
+                      selected={formRegister.interest}
                     />
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Pet'}
+                      selected={formRegister.interest}
                     />
                   </div>
                   <div>
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Food'}
+                      selected={formRegister.interest}
                     />
                     <InputCheckBox
                       onChangehandler={handleCheckBoxChange}
                       value={'Fashion'}
+                      selected={formRegister.interest}
                     />
                   </div>
                 </div>
@@ -295,19 +321,16 @@ const RegisterForm:React.FC<Props> = ({data}) => {
 
               {/* button */}
               <div className='w-full flex flex-col items-center'>
-              <ButtonFunc
+                <ButtonFunc
                     text={'submit'}
-                    onClick={(e:any) => handleSubmit(e, statusSubmit)}
+                    onClick={(e:any) => handleSubmit(e)}
                     buttonType={'text'}
                     cusDiv={'flex justify-center w-3/4 text-white'}
                     cusButton={'bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
-                />
+                  />
 
-                <a href="/">
-                  <p className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'
-                  >
+                <a href="/" className='text-blue-500 text-xs font-semibold cursor-pointer py-5 hover:text-gray-800'>
                       Already Have Account ?
-                  </p>
                 </a>
                 
               </div>

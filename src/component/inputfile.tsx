@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   previewImage?:any
@@ -30,6 +30,10 @@ const Inputfile:React.FC<Props> = ({previewImage,onChangehandler}) => {
       fileInput.click();
     }
   };
+  
+  useEffect(() => {
+    setPreview(previewImage)
+  },[previewImage])
 
   return (
     <div style={{ cursor: 'pointer' }} 
