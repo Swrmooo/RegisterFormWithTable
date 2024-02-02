@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 import FormTable from '../component/table'
+import SearchBar from '../component/register/element/inputForm'
 
 export default function Home() {
   const [userInfo, setUserInfo] = useState([]);
-  
+  const [searching, setSearching] = useState('');
+
   useEffect(() => {
     axios.get('https://api.pulsednsth.com/devtest/get/all').then((response) => {
         // console.log(response)
@@ -21,6 +25,12 @@ export default function Home() {
       ]);
     });
   };
+
+  const handleSearch = (e:any) => {
+    setSearching(e.target.value);
+  };
+
+  // console.log('=======', searching)
 
   return (
     <main className='flex bg-blue-50'>
@@ -38,9 +48,15 @@ export default function Home() {
         <div className='mx-10'>
           <div className='flex justify-between item-center'>
             {/* title*/}
-            <div className=' text-5xl'>
+            <div className='text-5xl'>
               Information
             </div>
+
+            <SearchBar
+              icon={faMagnifyingGlass}
+              onChangehandler={handleSearch}
+              className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-1/4 h-10 rounded-3xl'}
+              />
 
             <div className='my-5'>
               <a href="/form" className='bg-blue-600 text-white py-2 px-5 rounded-xl'>
@@ -53,8 +69,7 @@ export default function Home() {
             <FormTable 
             dataInfo={userInfo}
             handleDelete={handleDelete}
-            // handleEdit={handleEdit}
-            // statusSubmit={statusSubmit}
+            searchingResult={searching}
             />
           </div>
 

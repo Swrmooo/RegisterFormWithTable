@@ -5,14 +5,20 @@ import { faPen, faTrashCan, faMagnifyingGlass } from '@fortawesome/free-solid-sv
 interface Props {
   handleDelete:(e:any)=>void;
   dataInfo: any;
+  searchingResult?:any;
+  wordFiltered?:any;
 }
 
-const Table:React.FC<Props> = ({dataInfo,handleDelete}) => {
+const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFiltered}) => {
   const [userInfo, setUserInfo] = useState([dataInfo]);
+  // const [search, setSearch] = useState(['']);
 
   useEffect(() => {
     setUserInfo(dataInfo);
+    // setSearch(filteredData);
   }, [dataInfo]);
+
+  // console.log('=======', filteredData)
 
     return (
       <div className='flex justify-center '>
@@ -27,8 +33,15 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete}) => {
             </tr>
           </thead>
           <tbody className='text-lg '>
-            {userInfo.map((item:any,index:number) => (
-            <tr key={index} className={'menuHover '}>
+
+          {/* .filter((word:any) => word.includes(searchingResult)) */}
+            {/* {userInfo?.map((item:any,index:number) => ( */}
+            {userInfo?.filter((word:any) => 
+              Object.entries(word).some(([key, value]) =>
+              typeof value === 'string' && value.includes(searchingResult)
+              )
+            ).map((item:any,index:number) => (
+            <tr key={index} className={'menuHover'}>
               <td>{item?.fisrstName}</td>
               <td>{item?.lastName}</td>
               <td>{item?.address}</td>
