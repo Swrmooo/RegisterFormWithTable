@@ -6,10 +6,9 @@ interface Props {
   handleDelete:(e:any)=>void;
   dataInfo: any;
   searchingResult?:any;
-  wordFiltered?:any;
 }
 
-const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFiltered}) => {
+const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
   const [userInfo, setUserInfo] = useState([dataInfo]);
   // const [search, setSearch] = useState(['']);
 
@@ -21,7 +20,7 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFilter
   // console.log('=======', filteredData)
 
     return (
-      <div className='flex justify-center '>
+      <div className='flex'>
         <table className='w-full shadow-xl shadow-blue-300/100 rounded-xl'>
           <thead>
             <tr>
@@ -33,20 +32,18 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFilter
             </tr>
           </thead>
           <tbody className='text-lg '>
-
           {/* .filter((word:any) => word.includes(searchingResult)) */}
             {/* {userInfo?.map((item:any,index:number) => ( */}
             {userInfo?.filter((word:any) => 
               Object.entries(word).some(([key, value]) =>
               typeof value === 'string' && value.includes(searchingResult)
-              )
-            ).map((item:any,index:number) => (
+              )).map((item:any,index:number) => (
             <tr key={index} className={'menuHover'}>
               <td>{item?.fisrstName}</td>
               <td>{item?.lastName}</td>
               <td>{item?.address}</td>
               <td>{item?.email}</td>
-              <td className='flex justify-between pr-14 relative'>
+              <td className='flex justify-between relative'>
                 {item?.birthDate}
                 <div className='hiding'>
                   <div className='flex justify-evenly w-24'>

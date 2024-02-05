@@ -225,7 +225,8 @@ const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
                       onChangehandler={(e) => handleInput(e, 'text')} 
                       icon={faUser} 
                       formType={'fname'}
-                      className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
+                      customInput={'w-full h-full rounded-3xl pl-10'}
+                      customDiv={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
                   />
 
                   <InputForm 
@@ -234,7 +235,8 @@ const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
                       onChangehandler={(e) => handleInput(e, 'text')} 
                       icon={faUser} 
                       formType={'lname'}
-                      className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
+                      customInput={'w-full h-full rounded-3xl pl-10'}
+                      customDiv={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
                   />
                 </div>
 
@@ -244,7 +246,8 @@ const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
                     onChangehandler={(e) => handleInput(e, 'email')} 
                     icon={faEnvelope} 
                     formType={'email'}
-                    className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
+                    customInput={'w-full h-full rounded-3xl pl-10'}
+                    customDiv={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
                 />
                 
                 <div className='w-full flex justify-between'>
@@ -271,7 +274,8 @@ const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
                     onChangehandler={(e) => handleInput(e, 'address')} 
                     icon={faLocationDot} 
                     formType={'address'}
-                    className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
+                    customInput={'w-full h-full rounded-3xl pl-10'}
+                    customDiv={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-10 rounded-3xl'}
                 />
               
               <div className='relative items-center justify-center shadow-xl shadow-blue-300/30 w-full h-20 rounded-3xl'>

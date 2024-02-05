@@ -1,16 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Props {
-    icon:any;
-    className?:any;
+    icon?:any;
+    customDiv?:any;
+    customInput?:any;
     onChangehandler:(e:any)=>void;
-    value:any;
+    value?:any;
     formErrors?:any;
     formType?:any;
     inputName?:any;
+    
 }
 
-const InputForm:React.FC<Props> = ({inputName,icon,className,onChangehandler,value,formErrors,formType}) => {
+const InputForm:React.FC<Props> = ({inputName,icon,customDiv,customInput,onChangehandler,value,formErrors,formType}) => {
 
     const handleFormType = () => {
         let placeholder = inputName;
@@ -60,10 +62,11 @@ const InputForm:React.FC<Props> = ({inputName,icon,className,onChangehandler,val
     }
 
     return(
-        <div className={className}>
+        <div className={customDiv}>
             <FontAwesomeIcon icon={icon} style={{position:'absolute', left:'20px', color:'grey', fontSize:'15px'}}/>
             <input type="text" id={handleFormType().id} name={handleFormType().name} 
-            className='w-full h-full rounded-3xl pl-10'
+            // className='w-full h-full rounded-3xl pl-10'
+            className={customInput}
             onChange={onChangehandler}
             value={value}
             required

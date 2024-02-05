@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-import FormTable from '../component/table'
+import Table from '../component/table'
+import Card from '../component/card'
 import SearchBar from '../component/register/element/inputForm'
 
 export default function Home() {
@@ -33,48 +34,77 @@ export default function Home() {
   // console.log('=======', searching)
 
   return (
-    <main className='flex bg-blue-50'>
-      <div className='bg-blue-600 p-4 w-1/6'>
-        <p className='text-blue-800 text-5xl text-center'>
-          sidebar
-        </p>
-      </div>
-
-      <div className='w-5/6'>
-        <div className='bg-white h-12'>
-            header
+    <div className=' bg-blue-50'>
+      <div className='flex'>
+        <div className='bg-blue-600 p-4 w-1/6 text-5xl text-center'>
+            sidebar
         </div>
-        {/* content*/}
-        <div className='mx-10'>
-          <div className='flex justify-between item-center'>
-            {/* title*/}
-            <div className='text-5xl'>
-              Information
-            </div>
 
-            <SearchBar
-              icon={faMagnifyingGlass}
-              onChangehandler={handleSearch}
-              className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-1/4 h-10 rounded-3xl'}
-              />
+        <div className=' w-5/6'>
+          <header className='bg-white h-12'>
+              header
+          </header>
 
-            <div className='my-5'>
+          <div className='mx-10'>
+            {/* content */}
+            <div className='flex justify-between py-10'>
+              {/* content-header */}
+              <div className='text-4xl font-semibold'>
+                Information
+              </div>
+
               <a href="/form" className='bg-blue-600 text-white py-2 px-5 rounded-xl'>
-              CREATE NEW
+                CREATE NEW
               </a>
             </div>
-          </div>
 
-          <div className='my-10'>
-            <FormTable 
-            dataInfo={userInfo}
-            handleDelete={handleDelete}
-            searchingResult={searching}
-            />
-          </div>
+            <div className='flex bg-white rounded-xl h-28 shadow-xl shadow-blue-100/100'>
+              {/* content-search menu */}
+              <div className='w-3/6 flex flex-col p-4 item-center justify-between'>
+                <p className='text-lg font-semibold'>
+                  What are you looking for?
+                </p>
+                <SearchBar
+                  icon={faMagnifyingGlass}
+                  onChangehandler={handleSearch}
+                  inputName={'Search for category, name, address, etc'}
+                  customInput={'bg-blue-50 w-full h-full rounded-xl pl-10'}
+                  customDiv={'flex relative items-center justify-center w-full h-10 rounded-xl'}
+                />
+              </div>
 
+              <div className='w-2/6 '>
+                In Progress...
+              </div>
+
+              <div className='w-2/6'>
+                In Progress...
+              </div>
+            </div>
+
+            {/* content-table */}
+            <div className='my-10'>
+              <Card
+              dataInfo={userInfo}
+              handleDelete={handleDelete}
+              searchingResult={searching}
+              />
+
+              <Table 
+              dataInfo={userInfo}
+              handleDelete={handleDelete}
+              searchingResult={searching}
+              />
+            </div>
+          
+          </div>
+          
         </div>
       </div>
-    </main>
+
+      <footer>
+            footer
+      </footer>
+    </div>
   )
 }
