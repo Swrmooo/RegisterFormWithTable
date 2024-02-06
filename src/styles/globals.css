@@ -6,7 +6,7 @@ thead, th {
   padding: 10px;
   font-size: larger;
   text-align: left;
-  background-color: #DDEAFF;
+  background-color: rgb(238, 248, 255);
 }
 
 tbody, tr, td {
@@ -16,19 +16,27 @@ tbody, tr, td {
 .hiding {
   display: none;
   position: absolute;
-  right: 10px;
-  top: 15px;
+  /* opacity: 0;
+  transition: opacity 0.5s, display 0.5s; */
+  /* right: 10px; */
+  /* top: 15px; */
 }
 
 /* .menuHover:hover , .hiding  { */
 /* tr.menuHover:hover .hiding{ */
   .menuHover:hover .hiding{
   display:block;
-  
+  /* opacity: 1; */
 }
 
 .menuHover:hover td {
-  background-color: #e4eefe;
+  background-color: rgb(238, 248, 255);
+  transition: background-color 400ms ease-out;
+  
+}
+
+.menuHover:hover .listHover {
+  background-color: rgb(238, 248, 255);
   transition: background-color 400ms ease-out;
   
 }

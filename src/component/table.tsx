@@ -10,7 +10,6 @@ interface Props {
 
 const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
   const [userInfo, setUserInfo] = useState([dataInfo]);
-  // const [search, setSearch] = useState(['']);
 
   useEffect(() => {
     setUserInfo(dataInfo);
@@ -21,7 +20,7 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
 
     return (
       <div className='flex'>
-        <table className='w-full shadow-xl shadow-blue-300/100 rounded-xl'>
+        <table className='w-full shadow-xl bg-white shadow-blue-200/100 rounded-xl'>
           <thead>
             <tr>
               <th className='rounded-tl-xl'>Firstname</th>
@@ -45,7 +44,7 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
               <td>{item?.email}</td>
               <td className='flex justify-between relative'>
                 {item?.birthDate}
-                <div className='hiding'>
+                <div className='hiding right-8'>
                   <div className='flex justify-evenly w-24'>
                     <a href={`/table/${item.id}`} className='bg-yellow-400 px-2 text-white text-sm rounded'>
                       <FontAwesomeIcon icon={faMagnifyingGlass} style={{fontSize:'10px'}}/>

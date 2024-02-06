@@ -264,7 +264,9 @@ const RegisterForm:React.FC<Props> = ({data,onSubmit}) => {
                     onChangehandler={(e) => handleInput(e, 'sex')} 
                     value={formRegister.sex.trim()}
                     inputName={'Sex'}
-                    className={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-5/12 h-10 rounded-3xl'}
+                    inputAmount={['male', 'female', 'lgbtq', 'etc']}
+                    customDiv={'flex relative items-center justify-center shadow-xl shadow-blue-300/30 w-5/12 h-10 rounded-3xl'}
+                    customTag={'text-center w-full h-full rounded-3xl'}
                   />
                 </div>
                 

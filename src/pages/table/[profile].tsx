@@ -46,16 +46,22 @@ const Profile:React.FC<Props> = ({info}:any) => {
               </div>
             ]}
           />
-          {/* <a href="https://www.w3schools.com">Visit W3Schools.com!</a> */}
-          <a href="/">
-            <ButtonFunc
+          <a 
+          // href="/"
+          href="#"
+          onClick={() => {
+            window.history.back();
+          }}
+          className='flex justify-center my-4 items-center w-40 text-white  bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'>
+            Back
+          </a>
+          {/* <ButtonFunc
             text='Back'
             onClick={''}
             buttonType={'text'}
             cusDiv={'flex justify-center w-40 text-white pt-5'}
             cusButton={' bg-gradient-to-r shadow-xl shadow-blue-300/30 from-cyan-200 to-blue-500 h-10 font-semibold w-3/6 rounded-xl text-lg hover:bg-gradient-to-l duration-800 ease-linear'}
-          />
-          </a>
+            /> */}
         
     </div>
   )
