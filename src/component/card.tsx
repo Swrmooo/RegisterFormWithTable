@@ -25,17 +25,17 @@ const Card:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFiltere
             Object.entries(word).some(([key, value]) =>
             typeof value === 'string' && value.includes(searchingResult)
             )).map((item:any,index:number) => (
-            <div key={index} className='w-1/4 menuHover relative'>
+            <div key={index} className='w-3/6 md:w-1/3 menuHover relative'>
                 <CardForm
                 title={item?.fisrstName+' '+item?.lastName}
-                customtitle='flex justify-center py-4 text-2xl text-white font-semibold bg-gradient-to-r from-pink-300 to-blue-500'
+                customtitle='flex justify-center truncate py-4 text-2xl text-white font-semibold bg-gradient-to-r from-pink-300 to-blue-500'
                 customimageblock='pt-8 rounded-t-3xl flex justify-center bg-gradient-to-r from-pink-300 to-blue-500'
                 customimage='h-40 w-40 drop-shadow-xl border-4 object-cover object-top rounded-full '
                 image={item?.avatar}
-                colum='min-w-96 m-5 shadow-xl shadow-blue-300/100 rounded-3xl '
+                colum='min-w-96 m-5 md:w-2/12 md:h-96 shadow-xl shadow-blue-300/100 rounded-3xl '
                 customtext='p-5 text-lg '
                 infoClass={[
-                    <div className='flex flex-col leading-10'>
+                    <div className='flex flex-col leading-10 md:text-base md:leading-8'>
                       <div>
                         {envelope} Email : {item?.email}
                       </div>
@@ -51,8 +51,8 @@ const Card:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFiltere
                     </div>
                   ]}
                 />
-            <div className='flex justify-around hiding top-10 right-10'>
-              <div className='flex justify-evenly w-24 '>
+            <div className='flex justify-around hiding top-10 right-10 md:right-4'>
+              <div className='flex justify-evenly w-24'>
                   <a href={`/table/${item.id}`} className='bg-yellow-400 px-2 text-white text-sm rounded'>
                   <FontAwesomeIcon icon={faMagnifyingGlass} style={{fontSize:'10px'}}/>
                   </a>

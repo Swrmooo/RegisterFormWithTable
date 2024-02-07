@@ -38,23 +38,25 @@ const List:React.FC<Props> = ({dataInfo,handleDelete,searchingResult,wordFiltere
                     />
                     <div className='pl-10 w-10/12 truncate'>
                         <a href={`/table/${item.id}`}>
-                            <li className='text-3xl font-semibold text-blue-500 cursor-pointer'>
+                            <li className='text-3xl md:text-xl font-semibold text-blue-500 cursor-pointer'>
                                 {item?.fisrstName+' '+item?.lastName}
                             </li>
                         </a>
-                        <li>{item?.sex}</li>
+                        <li className='md:text-sm'>
+                            {item?.sex}
+                        </li>
                     </div>
                 </div>
                 
-                <li className='w-1/6 flex justify-center'>
+                <li className='w-1/6 flex justify-center md:text-sm'>
                     {item?.birthDate}
                 </li>
 
-                <li className='w-1/6 flex justify-left'>
+                <li className='w-1/6 flex justify-left md:text-sm'>
                     {item?.email}
                 </li>
                 
-                <li className='w-1/6 flex justify-left'>
+                <li className='w-1/6 flex justify-left md:text-sm'>
                     {item?.address}
                 </li>
                 

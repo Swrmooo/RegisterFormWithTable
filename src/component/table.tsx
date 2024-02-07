@@ -23,11 +23,11 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
         <table className='w-full shadow-xl bg-white shadow-blue-200/100 rounded-xl'>
           <thead>
             <tr>
-              <th className='rounded-tl-xl'>Firstname</th>
-              <th className=''>Lastname</th>
-              <th className=''>Address</th>
-              <th className=''>E-Mail</th>
+              <th className='rounded-tl-xl'>Fullname</th>
+              {/* <th className=''>Lastname</th> */}
               <th className='rounded-tr-xl'>Birthday</th>
+              <th className=''>E-Mail</th>
+              <th className=''>Address</th>
             </tr>
           </thead>
           <tbody className='text-lg '>
@@ -38,12 +38,12 @@ const Table:React.FC<Props> = ({dataInfo,handleDelete,searchingResult}) => {
               typeof value === 'string' && value.includes(searchingResult)
               )).map((item:any,index:number) => (
             <tr key={index} className={'menuHover'}>
-              <td>{item?.fisrstName}</td>
-              <td>{item?.lastName}</td>
-              <td>{item?.address}</td>
+              <td>{item?.fisrstName + ' ' + item?.lastName}</td>
+              {/* <td>{item?.lastName}</td> */}
+              <td>{item?.birthDate}</td>
               <td>{item?.email}</td>
               <td className='flex justify-between relative'>
-                {item?.birthDate}
+                {item?.address}
                 <div className='hiding right-8'>
                   <div className='flex justify-evenly w-24'>
                     <a href={`/table/${item.id}`} className='bg-yellow-400 px-2 text-white text-sm rounded'>

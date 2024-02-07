@@ -26,16 +26,11 @@ tbody, tr, td {
 /* tr.menuHover:hover .hiding{ */
   .menuHover:hover .hiding{
   display:block;
+  /* cursor: pointer; */
   /* opacity: 1; */
 }
 
 .menuHover:hover td {
-  background-color: rgb(238, 248, 255);
-  transition: background-color 400ms ease-out;
-  
-}
-
-.menuHover:hover .listHover {
   background-color: rgb(238, 248, 255);
   transition: background-color 400ms ease-out;
   
