@@ -49,24 +49,25 @@ export default function Home() {
   };
 
   // console.log('=======', displayType)
-
+  // style={{height:'100vh'}}
   return (
-    <div style={{height:'100vh'}} className='bg-blue-50'>
+    <div  className='bg-blue-50 '>
       <div className='flex'>
         <div className='bg-blue-600 p-4 w-1/6 text-5xl text-center'>
-            sidebar
+            {/* sidebar */}
         </div>
 
-        <div className=' w-5/6'>
+        <div className='w-5/6 border-2 border-red-400'>
           <header className='bg-white h-12'>
-              header
+              {/* header */}
+       
           </header>
 
-          <div className='mx-10'>
+          <div className='sm:mx-0 md:mx-6 lg:mx-10'>
             {/* content */}
-            <div className='flex justify-between py-10'>
+            <div className='flex justify-between py-10 '>
               {/* content-header */}
-              <div className='text-4xl font-semibold'>
+              <div className='text-4xl font-semibold '>
                 Information
               </div>
 
@@ -77,7 +78,7 @@ export default function Home() {
 
             <div className='flex bg-white rounded-xl h-28 shadow-xl shadow-blue-100/100'>
               {/* content-menu */}
-              <div className='w-3/6 flex flex-col p-4 item-center justify-between'>
+              <div className='w-3/6 flex flex-col p-4 item-center justify-between '>
                 <p className='text-lg font-semibold'>
                   What are you looking for?
                 </p>
@@ -95,7 +96,7 @@ export default function Home() {
                   Show result with...
                 </p>
                 <Select
-                  // icon={faMagnifyingGlass}
+                  icon={faMagnifyingGlass}
                   onChangehandler={(e) => handleSelect(e)} 
                   // value={displayType}
                   // inputName={'Show result with...'}

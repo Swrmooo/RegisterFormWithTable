@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 
+
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +13,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        'sm': '425px',
+        'tablet': '640px',
+        // => @media (min-width: 640px) { ... }
+        'laptop': '1024px',
+        // => @media (min-width: 1024px) { ... }
+    
+        'desktop': '1280px',
+        // => @media (min-width: 1280px) { ... }
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -19,6 +30,10 @@ const config: Config = {
       },
     },
   },
+
+  
   plugins: [],
 }
+
+
 export default config

@@ -4,13 +4,13 @@
 
 thead, th {
   padding: 10px;
-  font-size: larger;
+  /* font-size: larger; */
   text-align: left;
   background-color: rgb(238, 248, 255);
 }
 
 tbody, tr, td {
-  padding: 15px 0px 15px 15px;
+  padding: 10px 0px 10px 10px;
 }
 
 .hiding {
